@@ -1,0 +1,52 @@
+public class TakesLonger {
+  public static void main(String[] args) {
+
+    String quote = AskForString("Give me an incomplete quote");
+    String missingPart = AskForString( "What is the missing part?");
+    String startingWord = AskForString( "Which word shall the missing part start?");
+    System.out.println(insertMissingParts(StringToArray(quote),IndexToStart(StringToArray(quote),startingWord), StringToArray(missingPart)));
+
+    }
+
+  public static String AskForString (String stringToPrint) {
+    System.out.println(stringToPrint);
+    Scanner sc = new Scanner(System.in);
+    String askedString = sc.nextLine();
+    return askedString;
+  }
+
+  public static ArrayList<String> StringToArray (String askedString) {
+    askedString = askedString.replace("," , "|");
+    ArrayList<String> askedStringArray = new ArrayList<>(Arrays.asList(askedString.split(" ")));
+    return askedStringArray;
+  }
+
+  public static String ArrayToString (ArrayList<String> resultArray) {
+    String resultString = resultArray.toString();
+    return resultString;
+  }
+
+  public static int IndexToStart (ArrayList<String> askedArray, String WordToStart) {
+  int startIndex = 0;
+  for (int i = 0; i < askedArray.size(); i++) {
+    if (askedArray.get(i).contains(WordToStart)){
+      startIndex = i+1;
+      return startIndex;
+      }
+    }
+    return startIndex;
+  }
+
+  public static String insertMissingParts (ArrayList<String> mainQuote, int startIndex, ArrayList<String> missingParts){
+    String result = " ";
+    for (int i = 0; i < mainQuote.size(); i++) {
+      if ( i == startIndex){
+        mainQuote.addAll(startIndex, missingParts);
+        result = ArrayToString(mainQuote).replace("," , "").replace("[" , "").replace("]" , "").replace("|" , ",");
+      }
+
+    }
+    return result;
+  }
+
+}
