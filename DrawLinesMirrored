@@ -1,0 +1,57 @@
+package Drawing;
+
+import javax.swing.*;
+import java.awt.*;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+
+
+public class DrawLinesMirrored {
+
+  static int WIDTH = 600;  // vászon szélessége
+  static int HEIGHT = 600; // vászon magassága
+
+  public static void mainDraw(Graphics g) {
+    int distance = 20;
+    // Jobb oldal
+//    g.drawLine(0, 1 * distance, 2 * distance, HEIGHT);
+//    g.drawLine(0, 1 * distance, 2 * distance, HEIGHT);
+//    g.drawLine(0, 2 * distance, 3 * distance, HEIGHT);
+//    // ..
+//    g.drawLine(0, (HEIGHT / distance - 1) * distance, (WIDTH / distance) * distance, HEIGHT);
+
+    for (int i = 0; i < HEIGHT / distance; i++) {
+      g.drawLine(0, i * distance, (i + 1) * distance, HEIGHT);
+    }
+
+    //Bal oldal
+//    g.drawLine(WIDTH, 0 * distance, WIDTH - 1 * distance, HEIGHT);
+//    g.drawLine(WIDTH, 1 * distance, WIDTH - 2 * distance, HEIGHT);
+//    g.drawLine(WIDTH, 2 * distance, WIDTH - 3 * distance, HEIGHT);
+//    // ..
+//    g.drawLine(WIDTH, (HEIGHT / distance - 1) * distance, WIDTH - HEIGHT / distance * distance, HEIGHT);
+
+    for (int i = 0; i < HEIGHT / distance; i++) {
+      g.drawLine(WIDTH, i * distance, WIDTH - (i + 1) * distance, HEIGHT);
+    }
+  }
+
+  public static void main(String[] args) {
+    JFrame jFrame = new JFrame("Drawing");
+    jFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+    ImagePanel panel = new ImagePanel();
+    panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+    jFrame.add(panel);
+    jFrame.setLocationRelativeTo(null);
+    jFrame.setVisible(true);
+    jFrame.pack();
+  }
+
+  static class ImagePanel extends JPanel {
+    @Override
+    protected void paintComponent(Graphics graphics) {
+      super.paintComponent(graphics);
+      mainDraw(graphics);
+    }
+  }
+
+}
